@@ -2,7 +2,7 @@ const express = require("express");
 const { Pool } = require("pg");
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 // Configuración de la conexión a PostgreSQL
 const pool = new Pool({
@@ -22,6 +22,10 @@ app.get("/", async (req, res) => {
     console.error(err);
     res.status(500).send("Error conectando a la base de datos");
   }
+});
+
+app.get("/api/data", (req, res) => {
+  res.json({ message: "Hola desde Node.js 🚀", fecha: new Date() });
 });
 
 app.listen(port, () => {
