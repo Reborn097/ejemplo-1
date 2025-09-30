@@ -1,9 +1,8 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15
     container_name: postgres_container
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
@@ -11,14 +10,14 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Opcional: tu script de creación de tablas y datos
+      - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
     container_name: node_app
+    restart: always
     ports:
-      - "3000:3000"  # Cambia según el puerto de tu app
+      - "3000:3000"
     depends_on:
       - db
     environment:
@@ -26,6 +25,7 @@ services:
       DB_USER: postgres
       DB_PASSWORD: 12345
       DB_NAME: ejemplo_db
+      DB_PORT: 5432
 
 volumes:
-  db_data:
+  postgres_data:

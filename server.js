@@ -11,12 +11,13 @@ app.use(express.json());
 
 // Conexión con PostgreSQL
 const pool = new Pool({
-  user: "postgres",     
-  host: "localhost",
-  database: "ejemplo_db", 
-  password: "12345",     
-  port: 5432,
+  user: process.env.DB_USER || "postgres",
+  host: process.env.DB_HOST || "db",   // 👈 nombre del servicio
+  database: process.env.DB_NAME || "ejemplo_db",
+  password: process.env.DB_PASSWORD || "12345",
+  port: process.env.DB_PORT || 5432,
 });
+
 
 // Ruta para registrar un usuario
 app.post("/api/usuarios", async (req, res) => {
